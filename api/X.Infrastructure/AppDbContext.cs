@@ -17,6 +17,7 @@ internal sealed class AppDbContext : DbContext, IDbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(DependencyInyection.CurrentAssembly);
         base.OnModelCreating(modelBuilder);
+        Seed(modelBuilder);
     }
 
     protected async ValueTask DisposeAsync()
@@ -29,4 +30,20 @@ internal sealed class AppDbContext : DbContext, IDbContext
         return base.SaveChangesAsync(cancellationToken);
     }
 
+    private void Seed(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PermissionType>()
+                    .HasData(
+                    new PermissionType { Id = 1, Description = "Medical" },
+                         new PermissionType { Id = 2, Description = "Personal" },
+                         new PermissionType { Id = 3, Description = "Other" });
+
+        modelBuilder.Entity<Employee>()
+                    .HasData(new Employee
+                    {
+                        Id = 1,
+                        FirstName = "Test",
+                        LastName = "Test",
+                    });
+    }
 }

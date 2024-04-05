@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
     <div class="crud-table">
         <h2>Listado de permisos</h2>
@@ -15,10 +12,40 @@
                 <th>Acciones</th>
             </thead>
             <tbody id="itemList">
-                <!-- Aquí se insertarán los elementos dinámicamente -->
+                <tr v-for="permission in permissions" :key="permission.id">
+                    <td>{{ permission.id }}</td>
+                    <td>{{ permission.employee.firstName }}</td>
+                    <td>{{ permission.employee.lastName }}</td>
+                    <td>{{ permission.permissionType.description }}</td>
+                    <td>{{ permission.submittedDate }}</td>
+                    <td>
+                        <button>Editar</button> |
+                        <button>Eliminar</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
 </template>
+
+<script>
+import currentAxios from '../plugins/axios';
+
+export default {
+    data() {
+        return {
+            permissions: [],
+        }
+    },
+    async created() {
+        try {
+            const response = await currentAxios.get('permissions');
+            this.permissions = response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+</script>
 
 <style></style>

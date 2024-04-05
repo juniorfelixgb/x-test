@@ -2,21 +2,19 @@
     <div class="crud-form">
         <h2>Agrega un nuevo permiso</h2>
 
-        <form id="addForm" @submit:prevent="submitPermission">
+        <form id="addForm">
             <label for="employeeName">Nombre de empleado:</label>
             <input type="text" id="employeeName" name="employeeName" required v-model="permission.employeeName">
 
             <label for="permissionType">Tipos de permisos:</label>
             <select id="permissionType" name="permissionType" v-model="permission.permissionType">
                 <option disabled value="0">-- Seleccione un tipo de permiso --</option>
-                <option v-for="item in permissionTypes"
-                    :key="item.id"
-                    :value="item.id">
+                <option v-for="item in permissionTypes" :key="item.id" :value="item.id">
                     {{ item.description }}
                 </option>
             </select>
 
-            <button type="submit">Agregar</button>
+            <button type="button" @click="submitPermission">Agregar</button>
         </form>
     </div>
 </template>
@@ -43,8 +41,16 @@ export default {
         }
     },
     methods: {
-        submitPermission() {
-            
+        async submitPermission() {
+            try {
+                console.log(this.permission)
+                await currentAxios.post('permissions', {
+                    permissionType: this.permission.permissionType,
+                    employeeName: this.permission.employeeName,
+                });
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 }

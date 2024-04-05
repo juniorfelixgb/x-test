@@ -4,6 +4,6 @@ namespace X.Application.Permissions.Requests;
 
 public class CreatePermissionRequest
 {
-    public int EmployeeId { get; set; }
+    public string EmployeeName { get; set; }
     public PermissionType PermissionType { get; set; } = PermissionType.None;
 }

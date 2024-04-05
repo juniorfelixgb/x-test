@@ -23,10 +23,10 @@ internal sealed class PermissionService : IPermissionService
 
     public async Task<Permission> Create(Permission permission)
     {
-        var employeeExist = await this.employeeRespository.Exist(e => e.Id == permission.EmployeeId);
-        if (!employeeExist)
+        var employee = await this.employeeRespository.Get(e => e.FirstName == permission.Employee.FirstName);
+        if (employee is null)
         {
-            throw new EmployeeNotExistException(permission.EmployeeId);
+            throw new EmployeeNotExistException(permission.Employee.FirstName);
         }
 
         var permissionTypeExist = await this.permissionTypeRepository.Exist(e => e.Id == permission.PermissionTypeId);
@@ -35,6 +35,7 @@ internal sealed class PermissionService : IPermissionService
             throw new PermissionTypeNotExistException(permission.PermissionTypeId);
         }
 
+        permission.EmployeeId = employee.Id;
         var permissionCreated = await this.permissionRepository.Create(permission);
         return permissionCreated;
     }

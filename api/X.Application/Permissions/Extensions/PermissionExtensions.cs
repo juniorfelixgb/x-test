@@ -9,7 +9,10 @@ public static class PermissionExtensions
     {
         return new Permission
         {
-            EmployeeId = request.EmployeeId,
+            Employee = new Domain.Employees.Employee
+            {
+                FirstName = request.EmployeeName,
+            },
             PermissionTypeId = Convert.ToInt32(request.PermissionType),
             SubmittedDate = DateTime.UtcNow,
         };

@@ -14,8 +14,8 @@ internal sealed class EmployeeRespository : IEmployeeRespository
         this.context = context;
     }
 
-    public async Task<bool> Exist(Expression<Func<Employee, bool>> predicate)
+    public async Task<Employee> Get(Expression<Func<Employee, bool>> predicate)
     {
-        return await context.Employees.AnyAsync(predicate);
+        return await context.Employees.FirstOrDefaultAsync(predicate);
     }
 }

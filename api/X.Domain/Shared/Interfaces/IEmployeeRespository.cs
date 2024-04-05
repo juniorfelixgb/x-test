@@ -5,5 +5,5 @@ namespace X.Domain.Shared.Interfaces;
 
 public interface IEmployeeRespository
 {
-    Task<bool> Exist(Expression<Func<Employee, bool>> predicate);
+    Task<Employee> Get(Expression<Func<Employee, bool>> predicate);
 }

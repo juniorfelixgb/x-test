@@ -2,5 +2,5 @@
 
 public class EmployeeNotExistException : Exception
 {
-    public EmployeeNotExistException(int employeeId) : base($"The employee: {employeeId} especified does not exist!") { }
+    public EmployeeNotExistException(string employeeName) : base($"The employee: {employeeName} especified does not exist!") { }
 }
